@@ -3,7 +3,7 @@
 
 name:                lambda
 version:             0.1.0.0
-synopsis:            Basic untyped lambda-calculus with Parsec.
+synopsis:            Basic untyped lambda-calculus interpreter with Parsec.
 -- description:
 license:             BSD3
 license-file:        LICENSE
