@@ -2,21 +2,21 @@ module Main where
 
 import Text.Show.Unicode (uprint)
 import Parser (parseLambda)
+import System.IO (hFlush,stdout)
 
-setStdin :: IO ()
-setStdin = do
-              putStrLn "\nλ-expression:"
-              input <- getLine
-              stdin input
+inp :: IO String -> IO ()
+inp s = do
+            res <- s  
+            case res of 
+                []     -> (putStrLn $ "You must enter an expression.") >> inp (prompt "λ> ")
+                "quit" -> putStrLn "Bye."
+                _      -> (uprint $ parseLambda res) >> inp (prompt "λ> ")
 
-stdin :: String -> IO ()
-stdin "" = setStdin
-stdin "quit" = print "Bye."
-stdin s      = (uprint $ parseLambda s) >> setStdin
+prompt :: String -> IO String
+prompt text = do
+                putStr text
+                hFlush stdout
+                getLine
 
 main :: IO ()
-main = putStrLn "Lambda Calculus Interpreter with Parsec." >> stdin ""
-        
--- (variable) x
--- (application) (variable,abstraction) (variable,abstraction) ...
--- (abstraction) λ(variable).(variable, abstraction, application)
+main = inp (prompt "λ> ")

@@ -42,4 +42,5 @@ parseLambda exp = parse pLambda "" exp
                 where pLambda = choice [abstraction,try application,variable] <?> "Syntax Error."
 
 
-                  
+--λx.λy.xy
+--Right (Abs 'x' (Abs 'y' (App (Var 'x') (Var 'y'))))
