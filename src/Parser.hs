@@ -1,7 +1,8 @@
-module Parser (parseLambda) where
+module Parser (parseLambda, Lambda (Var, Abs, App)) where
 
 import Text.Parsec
 import Text.Parsec.String (Parser)
+import Control.Applicative (some)
 
 data Lambda = Var Char | Abs Char Lambda | App Lambda Lambda deriving Show
 
@@ -25,11 +26,11 @@ variable = (Var <$> letter)
 
 abstraction :: Parser Lambda
 abstraction = do
-                (char 'λ')
-                f <- (Abs <$> letter)
-                char ('.')
+                char 'λ'
+                f <- letter 
+                char '.'
                 a <- expr
-                pure (f a)
+                pure $ Abs f a
 
 application :: Parser Lambda
 application = do
@@ -41,6 +42,3 @@ parseLambda :: String -> Either ParseError Lambda
 parseLambda exp = parse pLambda "" exp
                 where pLambda = choice [abstraction,try application,variable] <?> "Syntax Error."
 
-
---λx.λy.xy
---Right (Abs 'x' (Abs 'y' (App (Var 'x') (Var 'y'))))
