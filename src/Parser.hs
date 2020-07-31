@@ -26,11 +26,11 @@ variable = (Var <$> letter)
 
 abstraction :: Parser Lambda
 abstraction = do
-                char 'λ'
-                f <- letter 
+                string "λ" <|> string "lambda:"
+                f <- some letter 
                 char '.'
                 a <- expr
-                pure $ Abs f a
+                pure $ foldr Abs a f
 
 application :: Parser Lambda
 application = do
@@ -41,4 +41,3 @@ application = do
 parseLambda :: String -> Either ParseError Lambda
 parseLambda exp = parse pLambda "" exp
                 where pLambda = choice [abstraction,try application,variable] <?> "Syntax Error."
-

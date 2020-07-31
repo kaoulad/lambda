@@ -1,5 +1,9 @@
 # lambda
 
+<div align="right">
+<img src="assets/logo.png" width="100">
+</div>
+
 Basic untyped lambda-calculus interpreter with Parsec.
 
 ```
@@ -24,28 +28,63 @@ Abs => Abstraction
 App => Application
 ```
 
+#### Quit
+To quit program, you have to type: 
+```
+λ> quit
+```
+
 #### Examples
 ```
 λ> x
-Right (Var 'x')
+β> Var 'x'
 ```
 
 ```
 λ> λx.x
-Right (Abs 'x' (Var 'x'))
+β> Abs 'x' (Var 'x')
 ```
 
 ```
 λ> λx.λy.xy
-Right (Abs 'x' (Abs 'y' (App (Var 'x') (Var 'y'))))
+# or
+λ> λxy.xy
+
+β> Abs 'x' (Abs 'y' (App (Var 'x') (Var 'y')))
 ```
 
 ```
 λ> xf
-Right (App (Var 'x') (Var 'f'))
+β> App (Var 'x') (Var 'f')
 ```
 
 ```
-λ> (λx.x)z  
-Right (App (Abs 'x' (Var 'x')) (Var 'z'))
+λ> (λx.x)(z)  
+β> Var 'z'
+```
+
+```
+λ> (λx.λy.x)(z)
+β> Abs 'y' (Var 'z')
+```
+
+```
+λ> (λx.xx)(z)
+β> App (Var 'z') (Var 'z')
+```
+
+```
+λ> (λx.x)(λz.z)
+β> Abs 'z' (Var 'z')
+```
+
+```
+λ> (λx.x)(xf)
+β> App (Var 'x') (Var 'f')
+```
+
+```
+# Shadowing
+λ> (λx.λx.x)(z)
+β> Abs 'x' (Var 'x')
 ```
