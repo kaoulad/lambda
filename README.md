@@ -1,9 +1,5 @@
 # lc
 
-<div align="right">
-<img src="assets/logo.png" width="100">
-</div>
-
 Basic untyped lambda-calculus interpreter with Parsec.
 
 ```
