@@ -1,4 +1,4 @@
-# lambda
+# lc
 
 <div align="right">
 <img src="assets/logo.png" width="100">
