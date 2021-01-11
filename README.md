@@ -1,4 +1,4 @@
-# lc
+# lambda-calculus
 
 Basic untyped lambda-calculus interpreter with Parsec.
 
